@@ -17,14 +17,14 @@ calc_fivb_ratings <- function(t1, t2, k, cutoffs, scores,
     cap <- 10^(-digits)
 
     rslt <- data.table(Result = names(scores),
-                       Score = scores)
+                       Score = scores,
+                       Probability = probs)
     rslt[, Change := f * (Score - e)]
     rslt[, FinalChange := fifelse(Score > 0,
                                   pmax(Change, cap),
                                   pmin(Change, -cap))]
     rslt[, `:=`(NewT1 = t1 + FinalChange,
                 NewT2 = t2 - FinalChange)]
-
     rslt
 }
 
